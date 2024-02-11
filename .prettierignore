@@ -37,5 +37,4 @@ yarn-error.log*
 robots.txt
 sitemap.xml
 
-# prevent accidentally committing and pushing draft files/directories
-*((DRAFT))*
+pnpm-lock.yaml
