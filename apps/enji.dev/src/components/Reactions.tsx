@@ -82,14 +82,14 @@ function ReactionCounter({ count, children = null }: ReactionCounterProps) {
 export type ReactionsProps = {
   contentType: ContentType;
   contentTitle: string;
-  withCountView?: boolean;
+  // withCountView?: boolean;
 };
 
 function Reactions({
   contentType,
   contentTitle,
-  withCountView = true,
-}: ReactionsProps) {
+}: // withCountView = true,
+ReactionsProps) {
   // currently, there is no way to get the 'slug' via a component property.
   const { pathname } = useRouter();
   const slug = pathname.split('/').reverse()[0];
@@ -101,7 +101,7 @@ function Reactions({
     isLoading,
     data: {
       meta: {
-        views,
+        // views,
         shares,
         reactions,
         reactionsDetail: { THINKING, CLAPPING, AMAZED },
@@ -110,7 +110,7 @@ function Reactions({
     },
     addShare,
     addReaction,
-  } = useInsight({ slug, contentType, contentTitle, countView: withCountView });
+  } = useInsight({ slug, contentType, contentTitle });
 
   const CLAPPING_QUOTA = MAX_REACTIONS_PER_SESSION - (user?.CLAPPING || 0);
   const THINKING_QUOTA = MAX_REACTIONS_PER_SESSION - (user?.THINKING || 0);
@@ -131,6 +131,7 @@ function Reactions({
       });
     }
   }, [isLoading, controls]);
+
   return (
     <m.div
       className={clsx(
@@ -193,7 +194,7 @@ function Reactions({
       </div>
       <div className={clsx('flex items-start gap-2')}>
         <div className={clsx('flex flex-col items-center gap-2')}>
-          <InsightButton views={views} shares={shares} reactions={reactions} />
+          {/* <InsightButton views={views} shares={shares} reactions={reactions} /> */}
         </div>
         <div className={clsx('flex flex-col items-center gap-2')}>
           <ShareButton
