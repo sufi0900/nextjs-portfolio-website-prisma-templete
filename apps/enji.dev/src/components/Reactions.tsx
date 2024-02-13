@@ -96,23 +96,23 @@ function Reactions({
   const { currentSection } = useScrollSpy();
 
   const {
-    isLoading,
-    data: {
-      meta: {
-        views,
-        shares,
-        reactions,
-        reactionsDetail: { THINKING, CLAPPING, AMAZED } = {},
-      } = {},
-      metaUser: { reactionsDetail: user } = {},
+  isLoading,
+  data: {
+    meta: {
+      views = 0,
+      shares = 0,
+      reactions = 0,
+      reactionsDetail: { THINKING = 0, CLAPPING = 0, AMAZED = 0 } = {},
     } = {},
-    addShare,
-    addReaction,
-  } = useInsight({ slug, contentType, contentTitle, countView: withCountView });
+    metaUser: { reactionsDetail: userReactionsDetail = {} } = {},
+  } = {},
+  addShare,
+  addReaction,
+} = useInsight({ slug, contentType, contentTitle, countView: withCountView });
 
-  const CLAPPING_QUOTA = MAX_REACTIONS_PER_SESSION - (user?.CLAPPING ?? 0);
-  const THINKING_QUOTA = MAX_REACTIONS_PER_SESSION - (user?.THINKING ?? 0);
-  const AMAZED_QUOTA = MAX_REACTIONS_PER_SESSION - (user?.AMAZED ?? 0);
+const CLAPPING_QUOTA = MAX_REACTIONS_PER_SESSION - (userReactionsDetail.CLAPPING || 0);
+const THINKING_QUOTA = MAX_REACTIONS_PER_SESSION - (userReactionsDetail.THINKING || 0);
+const AMAZED_QUOTA = MAX_REACTIONS_PER_SESSION - (userReactionsDetail.AMAZED || 0);
 
   const controls = useAnimationControls();
 
