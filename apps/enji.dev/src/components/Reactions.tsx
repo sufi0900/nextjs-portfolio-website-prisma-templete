@@ -82,39 +82,37 @@ function ReactionCounter({ count, children = null }: ReactionCounterProps) {
 export type ReactionsProps = {
   contentType: ContentType;
   contentTitle: string;
-  // withCountView?: boolean;
+  withCountView?: boolean;
 };
 
 function Reactions({
   contentType,
   contentTitle,
-}: // withCountView = true,
-ReactionsProps) {
-  // currently, there is no way to get the 'slug' via a component property.
+  withCountView = true,
+}: ReactionsProps) {
   const { pathname } = useRouter();
   const slug = pathname.split('/').reverse()[0];
 
-  // current active section
   const { currentSection } = useScrollSpy();
 
   const {
     isLoading,
     data: {
       meta: {
-        // views,
+        views,
         shares,
         reactions,
         reactionsDetail: { THINKING, CLAPPING, AMAZED },
-      },
-      metaUser: { reactionsDetail: user },
-    },
+      } = {},
+      metaUser: { reactionsDetail: user } = {},
+    } = {},
     addShare,
     addReaction,
-  } = useInsight({ slug, contentType, contentTitle });
+  } = useInsight({ slug, contentType, contentTitle, countView: withCountView });
 
-  const CLAPPING_QUOTA = MAX_REACTIONS_PER_SESSION - (user?.CLAPPING || 0);
-  const THINKING_QUOTA = MAX_REACTIONS_PER_SESSION - (user?.THINKING || 0);
-  const AMAZED_QUOTA = MAX_REACTIONS_PER_SESSION - (user?.AMAZED || 0);
+  const CLAPPING_QUOTA = MAX_REACTIONS_PER_SESSION - (user?.CLAPPING ?? 0);
+  const THINKING_QUOTA = MAX_REACTIONS_PER_SESSION - (user?.THINKING ?? 0);
+  const AMAZED_QUOTA = MAX_REACTIONS_PER_SESSION - (user?.AMAZED ?? 0);
 
   const controls = useAnimationControls();
 
@@ -194,7 +192,7 @@ ReactionsProps) {
       </div>
       <div className={clsx('flex items-start gap-2')}>
         <div className={clsx('flex flex-col items-center gap-2')}>
-          {/* <InsightButton views={views} shares={shares} reactions={reactions} /> */}
+          <InsightButton views={views} shares={shares} reactions={reactions} />
         </div>
         <div className={clsx('flex flex-col items-center gap-2')}>
           <ShareButton
