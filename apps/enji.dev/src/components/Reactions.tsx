@@ -69,7 +69,7 @@ function ReactionCounter({ count, children = null }: ReactionCounterProps) {
   return (
     <div
       className={clsx(
-        'relative flex h-6 items-center gap-1 overflow-hidden rounded-full bg-slate-200 px-2 py-1',
+        'relative flex h-6 items-center gap-1 overflow-hidden rounded-full bg-slate-200 py-1 px-2',
         'dark:bg-[#1d263a]'
       )}
     >
@@ -96,27 +96,25 @@ function Reactions({
 
   // current active section
   const { currentSection } = useScrollSpy();
+
   const {
     isLoading,
     data: {
       meta: {
-        views = 0,
-        shares = 0,
-        reactions = 0,
-        reactionsDetail: { THINKING = 0, CLAPPING = 0, AMAZED = 0 } = {},
-      } = {},
-      metaUser: { reactionsDetail: userReactionsDetail = {} } = {},
-    } = {},
+        views,
+        shares,
+        reactions,
+        reactionsDetail: { THINKING, CLAPPING, AMAZED },
+      },
+      metaUser: { reactionsDetail: user },
+    },
     addShare,
     addReaction,
   } = useInsight({ slug, contentType, contentTitle, countView: withCountView });
 
-  // const CLAPPING_QUOTA =
-  //   MAX_REACTIONS_PER_SESSION - (userReactionsDetail.CLAPPING || 0);
-  // const THINKING_QUOTA =
-  //   MAX_REACTIONS_PER_SESSION - (userReactionsDetail.THINKING || 0);
-  // const AMAZED_QUOTA =
-  //   MAX_REACTIONS_PER_SESSION - (userReactionsDetail.AMAZED || 0);
+  const CLAPPING_QUOTA = MAX_REACTIONS_PER_SESSION - user.CLAPPING;
+  const THINKING_QUOTA = MAX_REACTIONS_PER_SESSION - user.THINKING;
+  const AMAZED_QUOTA = MAX_REACTIONS_PER_SESSION - user.AMAZED;
 
   const controls = useAnimationControls();
 
@@ -156,7 +154,7 @@ function Reactions({
       <div className={clsx('flex items-center gap-4')}>
         <div className={clsx('flex flex-col items-center gap-2')}>
           <EmojiReaction
-            // disabled={CLAPPING_QUOTA <= 0}
+            disabled={CLAPPING_QUOTA <= 0}
             title="Claps"
             defaultImage="/assets/emojis/clapping-hands.png"
             animatedImage="/assets/emojis/clapping-hands-animated.png"
@@ -169,7 +167,7 @@ function Reactions({
         </div>
         <div className={clsx('flex flex-col items-center gap-2')}>
           <EmojiReaction
-            // disabled={AMAZED_QUOTA <= 0}
+            disabled={AMAZED_QUOTA <= 0}
             title="Wow"
             defaultImage="/assets/emojis/astonished-face.png"
             animatedImage="/assets/emojis/astonished-face-animated.png"
@@ -182,7 +180,7 @@ function Reactions({
         </div>
         <div className={clsx('flex flex-col items-center gap-2')}>
           <EmojiReaction
-            // disabled={THINKING_QUOTA <= 0}
+            disabled={THINKING_QUOTA <= 0}
             title="Hmm"
             defaultImage="/assets/emojis/face-with-monocle.png"
             animatedImage="/assets/emojis/face-with-monocle-animated.png"
