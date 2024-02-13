@@ -1,7 +1,7 @@
 export const getBaseUrl = () => {
   switch (process.env.NEXT_PUBLIC_VERCEL_ENV) {
     case 'production':
-      return 'https://www.enji.dev';
+      return 'https://nextjs-portfolio-website-prisma-templete-enji-3c2i9l8s9.vercel.app';
     case 'preview':
       return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
     default:
