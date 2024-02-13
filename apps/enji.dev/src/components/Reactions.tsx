@@ -102,7 +102,7 @@ function Reactions({
         views,
         shares,
         reactions,
-        reactionsDetail: { THINKING, CLAPPING, AMAZED },
+        reactionsDetail: { THINKING, CLAPPING, AMAZED } = {},
       } = {},
       metaUser: { reactionsDetail: user } = {},
     } = {},
