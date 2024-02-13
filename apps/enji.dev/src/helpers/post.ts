@@ -54,7 +54,15 @@ export const formatLang = (lang: TPostFrontMatter['lang']) => {
   }
 };
 
-export const formatNumber = (number: number): string => number.toLocaleString();
+export const formatNumber = (number: number | undefined | null): string => {
+  if (number == null) {
+    // Handle the case where number is undefined or null
+    return '0'; // or any default value you prefer
+  }
+
+  return number.toLocaleString();
+};
+
 
 export const getPostOgImageUrl = (data: TPostOgImage) => {
   const getUrl = (aspectRatio?: TPostOgImage['aspectRatio']) => {
