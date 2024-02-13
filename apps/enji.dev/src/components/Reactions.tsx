@@ -90,11 +90,9 @@ function Reactions({
   contentTitle,
   withCountView = true,
 }: ReactionsProps) {
-  // currently, there is no way to get the 'slug' via a component property.
   const { pathname } = useRouter();
   const slug = pathname.split('/').reverse()[0];
 
-  // current active section
   const { currentSection } = useScrollSpy();
 
   const {
@@ -111,10 +109,13 @@ function Reactions({
     addShare,
     addReaction,
   } = useInsight({ slug, contentType, contentTitle, countView: withCountView });
-  
-  const CLAPPING_QUOTA = MAX_REACTIONS_PER_SESSION - (userReactionsDetail.CLAPPING || 0);
-  const THINKING_QUOTA = MAX_REACTIONS_PER_SESSION - (userReactionsDetail.THINKING || 0);
-  const AMAZED_QUOTA = MAX_REACTIONS_PER_SESSION - (userReactionsDetail.AMAZED || 0);
+
+  const CLAPPING_QUOTA =
+    MAX_REACTIONS_PER_SESSION - (userReactionsDetail?.CLAPPING ?? 0);
+  const THINKING_QUOTA =
+    MAX_REACTIONS_PER_SESSION - (userReactionsDetail?.THINKING ?? 0);
+  const AMAZED_QUOTA =
+    MAX_REACTIONS_PER_SESSION - (userReactionsDetail?.AMAZED ?? 0);
 
   const controls = useAnimationControls();
 
