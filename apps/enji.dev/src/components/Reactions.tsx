@@ -112,9 +112,9 @@ function Reactions({
     addReaction,
   } = useInsight({ slug, contentType, contentTitle, countView: withCountView });
 
-  const CLAPPING_QUOTA = MAX_REACTIONS_PER_SESSION - user.CLAPPING;
-  const THINKING_QUOTA = MAX_REACTIONS_PER_SESSION - user.THINKING;
-  const AMAZED_QUOTA = MAX_REACTIONS_PER_SESSION - user.AMAZED;
+  const CLAPPING_QUOTA = MAX_REACTIONS_PER_SESSION - (user?.CLAPPING || 0);
+  const THINKING_QUOTA = MAX_REACTIONS_PER_SESSION - (user?.THINKING || 0);
+  const AMAZED_QUOTA = MAX_REACTIONS_PER_SESSION - (user?.AMAZED || 0);
 
   const controls = useAnimationControls();
 
@@ -131,7 +131,6 @@ function Reactions({
       });
     }
   }, [isLoading, controls]);
-
   return (
     <m.div
       className={clsx(
